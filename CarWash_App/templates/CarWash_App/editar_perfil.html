@@ -1,0 +1,17 @@
+{% extends 'CarWash_App/master.html' %}
+
+{% block title %}
+    Editar Perfil - CarWash
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-4 lh-1 mb-4">Editar Perfil</h1>
+
+    <form method="post" action="{% url 'editar_perfil' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+    </form>
+
+    <a class="btn btn-danger btn-lg mt-3" href="{% url 'logout' %}">Cerrar Sesión</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'CarWash_App/master.html' %}
+
+{% block title %}
+   Turnos Reservados - CarWash
+{% endblock %}
+
+{% block content %}
+   <h1 class="display-4 lh-1 mb-4">Turnos Reservados</h1>
+
+  
+
+   {% if reservas %}
+   {% for reserva in reservas %}
+   <p>{{ reserva.fecha_reserva }} - {{ reserva.turno }} - {% if reserva.id %}<a href="{% url 'editar_reserva' reserva.id %}">Editar</a>{% endif %}</p>
+    {% endfor %}
+   {% else %}
+       <p>No tienes turnos reservados.</p>
+   {% endif %}
+{% endblock %}

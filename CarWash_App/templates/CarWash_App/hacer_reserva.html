@@ -1,0 +1,16 @@
+{% extends 'CarWash_App/master.html' %}
+
+{% block title %}
+    Hacer Reserva - CarWash
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-4 lh-1 mb-4">Hacer Reserva</h1>
+    <p class="lead mb-5">Selecciona la fecha y el turno para tu reserva.</p>
+
+    <form method="post" action="{% url 'hacer_reserva' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-lg">Reservar</button>
+    </form>
+{% endblock %}
