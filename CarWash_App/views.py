@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegistroForm, EditarPerfilForm, ReservaForm, PrecioForm, EmpleadoForm
-from .models import Reserva, Precio, Empleado
+from .forms import *
+from .models import *
 
 
 def inicio(request): #home page
@@ -12,17 +12,13 @@ def inicio(request): #home page
 #Usuarios
 def registrar_usuario(request):
     if request.method == 'POST':
-        form = RegistroForm(request.POST)
+        form = RegistroForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            # Puedes loguear al usuario automáticamente después de registrarse
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(request, username=username, password=password)
-            login(request, user)
             return redirect('inicio')  
     else:
         form = RegistroForm()
+
     return render(request, 'CarWash_App/registro.html', {'form': form})
 
 
@@ -32,17 +28,48 @@ def perfil(request):
 
 @login_required
 def editar_perfil(request):
-    if request.method == 'POST':
-        form = EditarPerfilForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('inicio')
-    else:
-        form = EditarPerfilForm(instance=request.user)
+ if request.method == 'POST':
+     form = EditarPerfilForm(request.POST, instance=request.user)
+     if form.is_valid():
+         form.save()
+         return redirect('perfil')  # Puedes cambiar la URL a la que desees redirigir después de editar el usuario
+ else:
+     form = EditarPerfilForm(instance=request.user)
 
-    avatar = request.user.profile.avatar if hasattr(request.user, 'profile') and request.user.profile.avatar else None
+ return render(request, 'CarWash_App/editar_perfil.html', {'form': form})
 
-    return render(request, 'CarWash_App/editar_perfil.html', {'form': form, 'avatar': avatar})
+@login_required
+def crear_avatar(request):
+ if request.method == 'POST':
+     form = AvatarForm(request.POST, request.FILES)
+     if form.is_valid():
+         avatar_instance = form.save(commit=False)
+         avatar_instance.user = request.user  # Asigna el usuario al avatar
+         avatar_instance.save()  # Guarda el avatar
+         return redirect('perfil')  # Puedes cambiar la URL a la que desees redirigir después de crear el avatar
+ else:
+     form = AvatarForm()
+
+ return render(request, 'CarWash_App/crear_avatar.html', {'form': form})
+
+@login_required
+def editar_avatar(request):
+ try:
+     avatar = Avatar.objects.get(user=request.user)
+ except Avatar.DoesNotExist:
+     avatar = None
+
+ if request.method == 'POST':
+     form = AvatarFormEditar(request.POST, request.FILES, instance=avatar)
+     if form.is_valid():
+         avatar = form.save(commit=False)
+         avatar.user = request.user  # Asigna el usuario al avatar
+         avatar.save()
+         return redirect('perfil')  # Puedes cambiar la URL a la que desees redirigir después de editar el avatar
+ else:
+     form = AvatarFormEditar(instance=avatar)
+
+ return render(request, 'CarWash_App/editar_avatar.html', {'form': form})
 
 
 @login_required
@@ -70,18 +97,22 @@ def hacer_reserva(request):
 @login_required
 def editar_reserva(request, reserva_id):
     reserva = get_object_or_404(Reserva, pk=reserva_id, usuario=request.user)
-    print(f"Reserva ID: {reserva_id}, Usuario: {request.user}")
 
     if request.method == 'POST':
-        form = ReservaForm(request.POST, instance=reserva)
-        if form.is_valid():
-            form.save()
-            print("Reserva actualizada exitosamente")
+        action = request.POST.get('action')
+
+        if action == 'edit':
+            form = ReservaForm(request.POST, instance=reserva)
+            if form.is_valid():
+                form.save()
+                return redirect('ver_turnos_reservados')
+        elif action == 'delete':
+            reserva.delete()
             return redirect('ver_turnos_reservados')
     else:
         form = ReservaForm(instance=reserva)
 
-    return render(request, 'CarWash_App/editar_reserva.html', {'form': form})
+    return render(request, 'CarWash_App/editar_reserva.html', {'form': form, 'reserva': reserva})
 
 
 

@@ -1,10 +1,17 @@
-from django.contrib.auth.models import AbstractUser, User, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
+from django.contrib.auth.models import User
 
-class Usuario(AbstractUser):
+class Avatar(models.Model):
+    user = models.OneToOneField(User , on_delete=models.CASCADE, related_name='avatar')
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-    groups = models.ManyToManyField(Group, related_name='usuarios')
-    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_permissions')
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'Avatar'
+        verbose_name_plural = 'Avatars'
 
 class Reserva(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)

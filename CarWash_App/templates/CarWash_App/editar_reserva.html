@@ -7,9 +7,16 @@
 {% block content %}
     <h1 class="display-4 lh-1 mb-4">Editar Reserva</h1>
 
-    <form method="post" action="{% url 'editar_reserva' reserva.id %}">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <input type="hidden" name="action" value="edit"> {# Campo oculto para indicar acción de edición #}
         <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+    </form>
+
+    <form method="post" style="margin-top: 20px;">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="delete"> {# Campo oculto para indicar acción de eliminación #}
+        <button type="submit" class="btn btn-danger btn-lg">Eliminar Reserva</button>
     </form>
 {% endblock %}

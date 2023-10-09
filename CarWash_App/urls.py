@@ -16,7 +16,9 @@ urlpatterns = [
     path('hacer_reserva/', views.hacer_reserva, name='hacer_reserva'),
     path('editar_precios/', views.editar_precios, name='editar_precios'),
     path('agregar_empleado/', views.agregar_empleado, name='agregar_empleado'),
-
+    #Avatar
+    path('crear_avatar/', views.crear_avatar, name='crear_avatar'),
+    path('editar_avatar/', views.editar_avatar, name='editar_avatar'),
 
 #Reservas
     path('ver_turnos_reservados/', ver_turnos_reservados, name='ver_turnos_reservados'),
@@ -25,4 +27,4 @@ urlpatterns = [
 ]
 
     
-    # Añade más paths según necesites
+ 

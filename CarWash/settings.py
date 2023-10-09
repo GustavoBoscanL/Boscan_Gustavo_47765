@@ -142,3 +142,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 '''
 
 #AUTH_USER_MODEL = 'CarWash_App.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

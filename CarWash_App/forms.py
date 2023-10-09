@@ -1,20 +1,77 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario, Reserva, Precio, Empleado
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import User, Reserva, Precio, Empleado, Avatar
 from django.forms import SelectDateWidget
 import datetime
-
+from django.contrib.auth.models import User
 
 #Formulario de registro de usuario
 class RegistroForm(UserCreationForm):
-    class Meta:
-        model = Usuario
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']
+    first_name = forms.CharField(max_length=30, required=True, help_text='Requerido. Máximo 30 caracteres.')
+    last_name = forms.CharField(max_length=30, required=True, help_text='Requerido. Máximo 30 caracteres.')
+    email = forms.EmailField(max_length=254, required=True, help_text='Requerido. Ingrese una dirección de correo válida.')
 
-class EditarPerfilForm(forms.ModelForm):
     class Meta:
-        model = Usuario
-        fields = ['first_name', 'last_name', 'email', 'avatar']
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Este correo electrónico ya está en uso. Por favor, elige otro.')
+        return email
+
+class EditarPerfilForm(UserChangeForm):
+    password = forms.CharField(
+        label='Contraseña',
+        strip=False,
+        widget=forms.PasswordInput,
+        required=False  # No es requerido para la edición
+    )
+
+    new_password1 = forms.CharField(
+        label='Nueva Contraseña',
+        strip=False,
+        widget=forms.PasswordInput,
+        required=False  # No es requerido para la edición
+    )
+
+    new_password2 = forms.CharField(
+        label='Confirmar Nueva Contraseña',
+        strip=False,
+        widget=forms.PasswordInput,
+        required=False  # No es requerido para la edición
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Este correo electrónico ya está en uso. Por favor, elige otro.')
+        return email
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['avatar']
+
+class AvatarFormEditar(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['avatar']
+
+    def __init__(self, *args, **kwargs):
+        super(AvatarFormEditar, self).__init__(*args, **kwargs)
+        # Personaliza las etiquetas y ayuda del formulario si es necesario
+        self.fields['avatar'].label = 'Cambiar avatar'
+        self.fields['avatar'].help_text = 'Seleccione una imagen para actualizar su avatar.'
+
+
+
+
 
 #Formulario de reserva
 class ReservaForm(forms.ModelForm):

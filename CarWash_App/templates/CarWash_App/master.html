@@ -42,7 +42,7 @@
                 <a class="btn btn-primary" href="{% url 'perfil' %}">Perfil</a>
                 <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar Sesión</a>
                 {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" alt="Avatar" width="30" height="30">
+                `<img src="{{ user.avatar.avatar.url }}" alt="Avatar" width="30" height="30">`
                 {% endif %}
             {% else %}
                 <a class="btn btn-primary" href="{% url 'login' %}">Iniciar Sesión</a>
