@@ -14,12 +14,13 @@ def registrar_usuario(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('inicio')  
+            user = form.save()
+            login(request, user)
+            return redirect('inicio')
     else:
         form = RegistroForm()
 
-    return render(request, 'CarWash_App/registro.html', {'form': form})
+    return render(request, 'CarWash_App/registro.html',{'form':form})
 
 
 @login_required
@@ -40,17 +41,20 @@ def editar_perfil(request):
 
 @login_required
 def crear_avatar(request):
- if request.method == 'POST':
-     form = AvatarForm(request.POST, request.FILES)
-     if form.is_valid():
-         avatar_instance = form.save(commit=False)
-         avatar_instance.user = request.user  # Asigna el usuario al avatar
-         avatar_instance.save()  # Guarda el avatar
-         return redirect('perfil')  # Puedes cambiar la URL a la que desees redirigir después de crear el avatar
- else:
-     form = AvatarForm()
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            avatar_anterior = Avatar.objects.filter(user=request.user)
+            if (len(avatar_anterior) > 0):
+                avatar_anterior.delete()
+            avatar_nuevo = Avatar(
+                user=request.user, avatar=form.cleaned_data["avatar"])
+            avatar_nuevo.save()
+            return redirect('perfil')
+    else:
+        form = AvatarForm()
 
- return render(request, 'CarWash_App/crear_avatar.html', {'form': form})
+    return render(request, 'CarWash_App/crear_avatar.html',{'form':form})
 
 @login_required
 def editar_avatar(request):
