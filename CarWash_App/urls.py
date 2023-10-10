@@ -26,6 +26,7 @@ urlpatterns = [
 
 
 #Precios
+    path('cotizar/', views.cotizacion, name="cotizar")
 
 
 ]

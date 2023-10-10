@@ -136,48 +136,48 @@ def cotizacion(request):
         if form.is_valid():
             tipo_auto = form.cleaned_data['tipo_auto']
             tipo_lavado = form.cleaned_data['tipo_lavado']
-
-            # Consulta el modelo Precio para obtener las tarifas
             try:
                 precio = Precio.objects.get(tipo_auto=tipo_auto)
             except Precio.DoesNotExist:
-                # Manejar el caso en que no haya un precio definido para el tipo de auto seleccionado
                 precio = None
-
-            # Calcula el costo total en función del tipo de lavado seleccionado
             if precio:
-                if tipo_lavado == 'lavado_simple':
+                if tipo_lavado in 'lavado_simple':
                     costo_total = precio.lavado_simple
-                elif tipo_lavado == 'lavado_intenso':
+                elif tipo_lavado in 'lavado_intenso':
                     costo_total = precio.lavado_intenso
-                elif tipo_lavado == 'lavado_full':
+                elif tipo_lavado in 'lavado_full':
                     costo_total = precio.lavado_full
                 else:
-                    # Manejar el caso en que no se haya seleccionado un tipo de lavado válido
                     costo_total = None
             else:
                 costo_total = None
-
-        
+            return render(request, 'CarWash_App/cotizacion.html', {"costo_total": costo_total})
     else:
+        asignar_precios()
         form = CotizacionForm()
 
     return render(request, 'CarWash_App/cotizacion.html', {'form': form})
-'''
-# Crear instancias de Precio para cada tipo de auto
-def asignar_precios(**kwargs):
-    # Verifica si los precios ya han sido asignados
-    if not Precio.objects.exists():
-        # Asigna los precios predeterminados
-        Precio.objects.create(tipo_auto='Sedan', lavado_simple=4000, lavado_intenso=5500, lavado_full=8000)
-        Precio.objects.create(tipo_auto='Hatchback', lavado_simple=4200, lavado_intenso=5700, lavado_full=8200)
-        Precio.objects.create(tipo_auto='SUV', lavado_simple=4500, lavado_intenso=5900, lavado_full=8400)
-        Precio.objects.create(tipo_auto='Deportivos', lavado_simple=4500, lavado_intenso=5900, lavado_full=8400)
-        Precio.objects.create(tipo_auto='Van', lavado_simple=5000, lavado_intenso=6000, lavado_full=8500)
-        Precio.objects.create(tipo_auto='Camiones', lavado_simple=8000, lavado_intenso=8900, lavado_full=12000)
 
-asignar_precios()
-'''
+
+def asignar_precios():
+    precios_predeterminados = {
+        'Sedan': {'lavado_simple': 4000, 'lavado_intenso': 5500, 'lavado_full': 8000},
+        'Hatchback': {'lavado_simple': 4200, 'lavado_intenso': 5700, 'lavado_full': 8200},
+        'SUV': {'lavado_simple': 4500, 'lavado_intenso': 5900, 'lavado_full': 8400},
+        'Deportivos': {'lavado_simple': 4500, 'lavado_intenso': 5900, 'lavado_full': 8400},
+        'Van': {'lavado_simple': 5000, 'lavado_intenso': 6000, 'lavado_full': 8500},
+        'Camiones': {'lavado_simple': 8000, 'lavado_intenso': 8900, 'lavado_full': 12000},
+    }
+
+    for tipo_auto, precios in precios_predeterminados.items():
+        for tipo_auto, precios in precios_predeterminados.items():
+            if not Precio.objects.filter(tipo_auto=tipo_auto).exists():
+                Precio.objects.create(
+                    tipo_auto=tipo_auto,
+                    lavado_simple=precios['lavado_simple'],
+                    lavado_intenso=precios['lavado_intenso'],
+                    lavado_full=precios['lavado_full']
+                )
 #Empleados
 def agregar_empleado(request):
     if request.method == 'POST':

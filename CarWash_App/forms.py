@@ -93,18 +93,18 @@ class ReservaForm(forms.ModelForm):
 #Formulario de precios
 
 TIPOS_DE_AUTO_CHOICES = [       #Menú desplegable para tipos de auto diseñado con tupla
-    ('sedan', 'Sedan'),
-    ('hatchback', 'Hatchback'),
-    ('suv', 'SUV'),
-    ('deportivos', 'Deportivos'),
-    ('van', 'Van'),
-    ('camiones', 'Camiones'),
+    ('Sedan', 'Sedan'),
+    ('Hatchback', 'Hatchback'),
+    ('SUV', 'SUV'),
+    ('Deportivos', 'Deportivos'),
+    ('Van', 'Van'),
+    ('Camiones', 'Camiones'),
 ]
 
 TIPOS_DE_LAVADO_CHOICES  = [    #Menú desplegable para tipos de lavado diseñado con tupla
-    ('simple', 'Simple'),
-    ('intenso', 'Intenso'),
-    ('full', 'Full'),
+    ('Simple', 'Simple'),
+    ('Intenso', 'Intenso'),
+    ('Full', 'Full'),
    
 ]
 
