@@ -24,6 +24,10 @@ urlpatterns = [
     path('ver_turnos_reservados/', ver_turnos_reservados, name='ver_turnos_reservados'),
     path('editar_reserva/<int:reserva_id>/', views.editar_reserva, name='editar_reserva'),
 
+#Blog
+    path('blog/', lista_publicaciones, name='lista_publicaciones'),
+    
+
 
 #Precios
     path('cotizar/', views.cotizacion, name="cotizar")

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, Reserva, Precio, Empleado, Avatar
+from .models import User, Reserva, Precio, Empleado, Avatar, BlogPost
 from django.forms import SelectDateWidget
 import datetime
 from django.contrib.auth.models import User
@@ -113,6 +113,15 @@ class CotizacionForm(forms.Form):
     tipo_lavado = forms.ChoiceField(choices=TIPOS_DE_LAVADO_CHOICES)
 
 #Acá termina el formulario para los precios 
+
+#Formulario para el blog
+
+class BlogPostForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = ['titulo', 'contenido']
+
+
 
 
 #Formulario de empleados

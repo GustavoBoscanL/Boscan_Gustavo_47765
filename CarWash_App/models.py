@@ -27,6 +27,21 @@ class Precio(models.Model):
     def __str__(self):
         return self.tipo_auto
 
+#Blog
+class BlogPost(models.Model):
+    titulo = models.CharField(max_length=200)
+    contenido = models.TextField()
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
+    imagen = models.ImageField(upload_to='blog_posts/', null=True, blank=True)
+
+    def __str__(self):
+        return self.titulo
+
+    class Meta:
+        ordering = ['-fecha_publicacion']
+
+
+
 class Empleado(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)

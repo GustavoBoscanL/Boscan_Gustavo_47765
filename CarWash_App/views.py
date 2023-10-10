@@ -178,6 +178,15 @@ def asignar_precios():
                     lavado_intenso=precios['lavado_intenso'],
                     lavado_full=precios['lavado_full']
                 )
+
+#Views para el blog
+from .models import BlogPost
+
+def lista_publicaciones(request):
+    publicaciones = BlogPost.objects.all()
+    return render(request, 'CarWash_App/lista_publicaciones.html', {'publicaciones': publicaciones})
+
+
 #Empleados
 def agregar_empleado(request):
     if request.method == 'POST':
