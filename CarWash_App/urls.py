@@ -14,7 +14,7 @@ urlpatterns = [
     path('registrar/', views.registrar_usuario, name='registrar_usuario'),
     path('editar_perfil/', views.editar_perfil, name='editar_perfil'),
     path('hacer_reserva/', views.hacer_reserva, name='hacer_reserva'),
-    path('editar_precios/', views.editar_precios, name='editar_precios'),
+    #path('editar_precios/', views.editar_precios, name='editar_precios'),
     path('agregar_empleado/', views.agregar_empleado, name='agregar_empleado'),
     #Avatar
     path('crear_avatar/', views.crear_avatar, name='crear_avatar'),
@@ -23,6 +23,10 @@ urlpatterns = [
 #Reservas
     path('ver_turnos_reservados/', ver_turnos_reservados, name='ver_turnos_reservados'),
     path('editar_reserva/<int:reserva_id>/', views.editar_reserva, name='editar_reserva'),
+
+
+#Precios
+
 
 ]
 

@@ -19,9 +19,13 @@ class Reserva(models.Model):
     turno = models.CharField(max_length=10)
 
 class Precio(models.Model):
-    tipo_auto = models.CharField(max_length=50)
-    lavado_rapido = models.DecimalField(max_digits=5, decimal_places=2)
+    tipo_auto = models.CharField(max_length=50, unique=True)
+    lavado_simple = models.DecimalField(max_digits=5, decimal_places=2)
     lavado_intenso = models.DecimalField(max_digits=5, decimal_places=2)
+    lavado_full = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.tipo_auto
 
 class Empleado(models.Model):
     nombre = models.CharField(max_length=50)

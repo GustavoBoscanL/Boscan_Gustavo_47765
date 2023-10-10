@@ -53,6 +53,7 @@ class EditarPerfilForm(UserChangeForm):
             raise forms.ValidationError('Este correo electrónico ya está en uso. Por favor, elige otro.')
         return email
 
+#Formulario para crear y editar avatar
 class AvatarForm(forms.ModelForm):
     class Meta:
         model = Avatar
@@ -88,11 +89,31 @@ class ReservaForm(forms.ModelForm):
         model = Reserva
         fields = ['fecha_reserva', 'turno']
 
+
 #Formulario de precios
-class PrecioForm(forms.ModelForm):
-    class Meta:
-        model = Precio
-        fields = ['tipo_auto', 'lavado_rapido', 'lavado_intenso']
+
+TIPOS_DE_AUTO_CHOICES = [       #Menú desplegable para tipos de auto diseñado con tupla
+    ('sedan', 'Sedan'),
+    ('hatchback', 'Hatchback'),
+    ('suv', 'SUV'),
+    ('deportivos', 'Deportivos'),
+    ('van', 'Van'),
+    ('camiones', 'Camiones'),
+]
+
+TIPOS_DE_LAVADO_CHOICES  = [    #Menú desplegable para tipos de lavado diseñado con tupla
+    ('simple', 'Simple'),
+    ('intenso', 'Intenso'),
+    ('full', 'Full'),
+   
+]
+
+class CotizacionForm(forms.Form):
+    tipo_auto = forms.ChoiceField(choices=TIPOS_DE_AUTO_CHOICES)
+    tipo_lavado = forms.ChoiceField(choices=TIPOS_DE_LAVADO_CHOICES)
+
+#Acá termina el formulario para los precios 
+
 
 #Formulario de empleados
 class EmpleadoForm(forms.ModelForm):

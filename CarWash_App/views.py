@@ -6,6 +6,7 @@ from .forms import *
 from .models import *
 
 
+ 
 def inicio(request): #home page
     return render(request, "CarWash_App/inicio.html")
 
@@ -128,17 +129,54 @@ def ver_turnos_reservados(request):
     return render(request, 'CarWash_App/ver_turnos_reservados.html', {'reservas': reservas})
 
 
-
 #Precios
-def editar_precios(request):
+def cotizacion(request):
     if request.method == 'POST':
-        form = PrecioForm(request.POST)
+        form = CotizacionForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('inicio')
+            tipo_auto = form.cleaned_data['tipo_auto']
+            tipo_lavado = form.cleaned_data['tipo_lavado']
+
+            # Consulta el modelo Precio para obtener las tarifas
+            try:
+                precio = Precio.objects.get(tipo_auto=tipo_auto)
+            except Precio.DoesNotExist:
+                # Manejar el caso en que no haya un precio definido para el tipo de auto seleccionado
+                precio = None
+
+            # Calcula el costo total en función del tipo de lavado seleccionado
+            if precio:
+                if tipo_lavado == 'lavado_simple':
+                    costo_total = precio.lavado_simple
+                elif tipo_lavado == 'lavado_intenso':
+                    costo_total = precio.lavado_intenso
+                elif tipo_lavado == 'lavado_full':
+                    costo_total = precio.lavado_full
+                else:
+                    # Manejar el caso en que no se haya seleccionado un tipo de lavado válido
+                    costo_total = None
+            else:
+                costo_total = None
+
+        
     else:
-        form = PrecioForm()
-    return render(request, 'CarWash_App/editar_precios.html', {'form': form})
+        form = CotizacionForm()
+
+    return render(request, 'CarWash_App/cotizacion.html', {'form': form})
+
+# Crear instancias de Precio para cada tipo de auto
+def asignar_precios(**kwargs):
+    # Verifica si los precios ya han sido asignados
+    if not Precio.objects.exists():
+        # Asigna los precios predeterminados
+        Precio.objects.create(tipo_auto='Sedan', lavado_simple=4000, lavado_intenso=5500, lavado_full=8000)
+        Precio.objects.create(tipo_auto='Hatchback', lavado_simple=4200, lavado_intenso=5700, lavado_full=8200)
+        Precio.objects.create(tipo_auto='SUV', lavado_simple=4500, lavado_intenso=5900, lavado_full=8400)
+        Precio.objects.create(tipo_auto='Deportivos', lavado_simple=4500, lavado_intenso=5900, lavado_full=8400)
+        Precio.objects.create(tipo_auto='Van', lavado_simple=5000, lavado_intenso=6000, lavado_full=8500)
+        Precio.objects.create(tipo_auto='Camiones', lavado_simple=8000, lavado_intenso=8900, lavado_full=12000)
+
+asignar_precios()
 
 #Empleados
 def agregar_empleado(request):
