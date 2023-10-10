@@ -141,11 +141,11 @@ def cotizacion(request):
             except Precio.DoesNotExist:
                 precio = None
             if precio:
-                if tipo_lavado in 'lavado_simple':
+                if tipo_lavado in 'Simple':
                     costo_total = precio.lavado_simple
-                elif tipo_lavado in 'lavado_intenso':
+                elif tipo_lavado in 'Intenso':
                     costo_total = precio.lavado_intenso
-                elif tipo_lavado in 'lavado_full':
+                elif tipo_lavado in 'Full':
                     costo_total = precio.lavado_full
                 else:
                     costo_total = None
