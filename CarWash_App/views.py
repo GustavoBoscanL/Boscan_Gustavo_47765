@@ -163,7 +163,7 @@ def cotizacion(request):
         form = CotizacionForm()
 
     return render(request, 'CarWash_App/cotizacion.html', {'form': form})
-
+'''
 # Crear instancias de Precio para cada tipo de auto
 def asignar_precios(**kwargs):
     # Verifica si los precios ya han sido asignados
@@ -177,7 +177,7 @@ def asignar_precios(**kwargs):
         Precio.objects.create(tipo_auto='Camiones', lavado_simple=8000, lavado_intenso=8900, lavado_full=12000)
 
 asignar_precios()
-
+'''
 #Empleados
 def agregar_empleado(request):
     if request.method == 'POST':
