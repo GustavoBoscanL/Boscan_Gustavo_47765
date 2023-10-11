@@ -10967,19 +10967,68 @@ video.bg-video {
   }
 }
 
+/*CSS para el blog */
 
-.blog-post {
-  max-width: 800px; /* Ajusta según sea necesario */
-  margin: 0 auto;
+.custom-blog-style .blog-post {
+  max-width: 400px;
+  margin: 20px;
   padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
 }
 
-.blog-post img {
+.custom-blog-style .blog-post img {
   max-width: 100%;
-  max-height: 400px; /* Ajusta según sea necesario */
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.custom-blog-style .blog-post h3 {
+  color: #333;
+}
+
+.custom-blog-style .blog-post p {
+  color: #666;
+}
+
+.custom-blog-style .masthead {
   height: auto;
 }
 
-.masthead {
-  height: 100vh; /* Establece la altura completa de la ventana */
+
+/*about me */
+.about-me-container {
+  display: flex;
+  max-width: 10px;
+  margin: 0 auto;
+}
+
+.about-me-image {
+  flex: 0 0 auto;
+  margin-right: -80px;
+  max-width: 200px; /* Ancho máximo de la imagen */
+}
+
+.about-me-image img {
+  width: 50%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.about-me-content {
+  flex: 1;
+}
+
+.about-me-content {
+    flex: 1; /* Se expandirá para llenar el espacio disponible */
+}
+
+.about-me-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en filas si no hay espacio suficiente */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  max-width: 800px; /* Establece un ancho máximo para el contenido */
+  margin: 0 auto;
 }

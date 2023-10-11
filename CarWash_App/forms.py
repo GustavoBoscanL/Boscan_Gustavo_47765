@@ -1,9 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, Reserva, Precio, Empleado, Avatar, BlogPost
+from .models import User, Reserva, Precio, Avatar, BlogPost
 from django.forms import SelectDateWidget
 import datetime
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+
+
+
 
 #Formulario de registro de usuario
 class RegistroForm(UserCreationForm):
@@ -121,11 +125,11 @@ class BlogPostForm(forms.ModelForm):
         model = BlogPost
         fields = ['titulo', 'contenido']
 
+#Formulario para el contact us
+class ContactForm(forms.Form):
+    nombre = forms.CharField(max_length=100, label='Nombre')
+    email = forms.EmailField(label='Correo Electrónico')
+    mensaje = forms.CharField(widget=forms.Textarea, label='Mensaje')
 
 
 
-#Formulario de empleados
-class EmpleadoForm(forms.ModelForm):
-    class Meta:
-        model = Empleado
-        fields = ['nombre', 'apellido', 'cargo', 'especialidad', 'experiencia']

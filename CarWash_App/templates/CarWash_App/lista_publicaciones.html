@@ -3,8 +3,8 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'CarWash_App/css/styles.css' %}">
-    <div class="blog-container">
-        <h2>Hola, Bienvenido a nuestro Blog</h2>
+    <div class="blog-container custom-blog-style">
+        <h3>Hola, Bienvenido a nuestro Blog</h3>
         {% for publicacion in publicaciones %}
             <div class="blog-post">
                 <h3>{{ publicacion.titulo }}</h3>

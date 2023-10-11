@@ -40,11 +40,3 @@ class BlogPost(models.Model):
     class Meta:
         ordering = ['-fecha_publicacion']
 
-
-
-class Empleado(models.Model):
-    nombre = models.CharField(max_length=50)
-    apellido = models.CharField(max_length=50)
-    cargo = models.CharField(max_length=50)
-    especialidad = models.CharField(max_length=100)
-    experiencia = models.TextField()    

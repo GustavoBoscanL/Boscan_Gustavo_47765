@@ -14,8 +14,7 @@ urlpatterns = [
     path('registrar/', views.registrar_usuario, name='registrar_usuario'),
     path('editar_perfil/', views.editar_perfil, name='editar_perfil'),
     path('hacer_reserva/', views.hacer_reserva, name='hacer_reserva'),
-    #path('editar_precios/', views.editar_precios, name='editar_precios'),
-    path('agregar_empleado/', views.agregar_empleado, name='agregar_empleado'),
+ 
     #Avatar
     path('crear_avatar/', views.crear_avatar, name='crear_avatar'),
     path('editar_avatar/', views.editar_avatar, name='editar_avatar'),
@@ -27,10 +26,16 @@ urlpatterns = [
 #Blog
     path('blog/', lista_publicaciones, name='lista_publicaciones'),
     
-
+#Footer buttons
+    path('about_us/', about_us, name='about_us'),
+    path('contact_us/', contact_us, name='contact_us'),
+    path('contact_us_success/', contact_us_success, name='contact_us_success'),
+    path('about_me/', about_me, name='about_me'),
 
 #Precios
     path('cotizar/', views.cotizacion, name="cotizar")
+
+    
 
 
 ]

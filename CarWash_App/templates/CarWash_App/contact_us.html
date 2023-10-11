@@ -1,0 +1,16 @@
+{% extends 'CarWash_App/master.html' %}
+
+{% block title %}
+    Contact Us - CarWash
+{% endblock %}
+
+{% block content %}
+    <h2>Contact Us</h2>
+    <p>¡Estamos encantados de escucharte! Utiliza el formulario a continuación para ponerte en contacto con nosotros:</p>
+
+    <form method="post" action="{% url 'contact_us' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+{% endblock %}

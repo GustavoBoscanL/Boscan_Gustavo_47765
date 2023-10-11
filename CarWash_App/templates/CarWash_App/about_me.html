@@ -1,0 +1,26 @@
+{% extends 'CarWash_App/master.html' %}
+{% load static %}
+{% block title %}
+About Me
+{% endblock %}
+
+{% block content %}
+<div class="about-me-container">
+    <div class="about-me-image">
+        <img src="{% static 'CarWash_App\assets\img\about_me.jpeg' %}" alt="Tu Avatar">
+    </div>
+    <div class="about-me-content">
+        <p>¡Hola! Soy Gustavo Boscán Leotaud, un apasionado programador con experiencia en Python. 
+            Siempre estoy en busca de nuevos retos y aprendizajes, ya que considero que la constante
+            evolución es clave en mi carrera. Además de mi dedicación al mundo de la programación, 
+            soy un orgulloso padre de familia. Fuera del código, me encuentro inmerso en el fascinante 
+            universo de los videojuegos y comparto mi pasión por el fútbol. ¡Bienvenido a mi espacio digital,
+            espero que les guste!</p>
+    </div>
+    <div class="social-buttons">
+        <a href="https://github.com/Razarac92" class="btn btn-dark m-3">GitHub</a>
+        <a href="https://www.linkedin.com/in/gustavo-alberto-bosc%C3%A1n-leotaud-bb3681131/" class="btn btn-dark m-3">LinkedIn</a>
+        <!-- Agrega más botones según sea necesario -->
+    </div>
+</div>
+{% endblock %}

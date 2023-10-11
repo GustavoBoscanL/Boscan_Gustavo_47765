@@ -15,5 +15,6 @@
     {% endfor %}
    {% else %}
        <p>No tienes turnos reservados.</p>
+       <a class="btn btn-primary btn-lg" href="{% url 'perfil' %}">Regresar</a>
    {% endif %}
 {% endblock %}

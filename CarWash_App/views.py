@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import *
 from .models import *
-
-
+from django.urls import reverse
+from .models import BlogPost
  
 def inicio(request): #home page
     return render(request, "CarWash_App/inicio.html")
@@ -180,20 +180,33 @@ def asignar_precios():
                 )
 
 #Views para el blog
-from .models import BlogPost
+
 
 def lista_publicaciones(request):
     publicaciones = BlogPost.objects.all()
     return render(request, 'CarWash_App/lista_publicaciones.html', {'publicaciones': publicaciones})
 
 
-#Empleados
-def agregar_empleado(request):
+
+
+
+#Footer buttons
+def about_us(request):
+    return render(request, 'CarWash_App/about_us.html')
+
+def contact_us(request):
     if request.method == 'POST':
-        form = EmpleadoForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('inicio')
+            
+            return redirect('contact_us_success')
     else:
-        form = EmpleadoForm()
-    return render(request, 'CarWash_App/agregar_empleado.html', {'form': form})
+        form = ContactForm()
+
+    return render(request, 'CarWash_App/contact_us.html', {'form': form})
+
+def contact_us_success(request):
+    return render(request, 'CarWash_App/contact_us_success.html')
+
+def about_me(request):
+    return render(request, 'CarWash_App/about_me.html')
